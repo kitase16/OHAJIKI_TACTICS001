@@ -120,19 +120,18 @@ OTINTEGER Add(const OTINTEGER& AAA, const OTINTEGER& BBB) {
 
 OTINTEGER Subtract(const OTINTEGER& A, const OTINTEGER& B) {
 	OTINTEGER C;
-
-	for (auto& byte : B.value) {
+	OTINTEGER D = Add(Add(B, { {1} }), C);
+	for (auto& byte : D.value) {
 		C.value.push_back(byte ^ 0);
 	}
 
-	C.value.clear();
-
-	OTINTEGER D = Add(Add(A, { {1} }), C);
+	D = Add(Add(B, { {1} }), C);
+	
 	for (auto& byte : D.value) {
 		C.value.push_back(byte^0);
 	}
 	// Implement subtraction logic here
-	return C;
+	return Subtract(A, B);
 }
 bool IsZero(const OTINTEGER& A) {
 	for (const auto& byte : A.value) {
